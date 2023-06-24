@@ -63,7 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # todo profile context processor
+                'django_exam_24_06_2023.processors.get_profile',
             ],
         },
     },
@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-#
+# todo: replace with
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
