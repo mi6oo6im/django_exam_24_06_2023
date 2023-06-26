@@ -2,11 +2,11 @@
 
 {% block content %}
         <!-- Dashboard Page -->
-{% if fruits %}
+{% if object_list %}
         <h2>Fruits</h2>
 <section id="dashboard">
     <!-- Display a div "fruit" with information about each post (if any)-->
-{% for fruit in fruits %}
+{% for fruit in object_list %}
     <!-- first fruit -->
     <div class="fruit">
         <!-- fruit image -->

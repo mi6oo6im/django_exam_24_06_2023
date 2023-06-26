@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView
+
 from django_exam_24_06_2023.webapp.models import Fruit, UserProfile
 from .forms import CreateUserForm, CreateFruitForm, EditFruitForm, DeleteFruitForm, EditUserForm
 
@@ -10,13 +12,18 @@ def index(request):
     return render(request, 'webapp/index.html')
 
 
-def dashboard(request):
-    fruits = Fruit.objects.all()
-    context = {
-        'fruits': fruits
-    }
-    return render(request, 'webapp/dashboard.html', context)
+class DashboardView(ListView):
+    model = Fruit
+    template_name = "webapp/dashboard.html"
 
+
+# old dashboard view:
+# def dashboard(request):
+#     fruits = Fruit.objects.all()
+#     context = {
+#         'fruits': fruits
+#     }
+#     return render(request, 'webapp/dashboard.html', context)
 
 # profile views:
 def profile_create(request):
@@ -76,13 +83,19 @@ def fruit_create(request):
     return render(request, 'webapp/create-fruit.html', context)
 
 
-def fruit_details(request, pk):
-    current_fruit = Fruit.objects.get(pk=pk)
-    context = {
-        'fruit': current_fruit
-    }
+class FruitDetailsView(DetailView):
+    model = Fruit
+    template_name = 'webapp/details-fruit.html'
 
-    return render(request, 'webapp/details-fruit.html', context)
+
+# old fruit details view:
+# def fruit_details(request, pk):
+#     current_fruit = Fruit.objects.get(pk=pk)
+#     context = {
+#         'fruit': current_fruit
+#     }
+#
+#     return render(request, 'webapp/details-fruit.html', context)
 
 
 def fruit_edit(request, pk):

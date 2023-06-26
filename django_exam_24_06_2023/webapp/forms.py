@@ -83,4 +83,4 @@ class DeleteFruitForm(BaseFruitForm):
 
     def __set_fields_disabled(self):
         for field in self.fields.values():
-            field.widget.attrs['disabled'] = True
+            field.widget.attrs['disabled'] = 'disabled'
