@@ -5,9 +5,9 @@ urlpatterns = (
     path('', views.index, name='index'),
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
     # profile urls:
-    path('profile/create/', views.profile_create, name='create profile'),
-    path('profile/details/', views.profile_details, name='profile details'),
-    path('profile/edit/', views.profile_edit, name='edit profile'),
+    path('profile/create/', views.ProfileCreateView.as_view(), name='create profile'),
+    path('profile/details/', views.ProfileDetailView.as_view(), name='profile details'),
+    path('profile/edit/', views.ProfileEditView.as_view(), name='edit profile'),
     path('profile/delete/', views.profile_delete, name='delete profile'),
     # fruit urls:
     path('fruit/create/', views.fruit_create, name='create fruit'),

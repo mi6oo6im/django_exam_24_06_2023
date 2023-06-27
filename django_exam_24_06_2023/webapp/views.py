@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from django_exam_24_06_2023.webapp.models import Fruit, UserProfile
 from .forms import CreateUserForm, CreateFruitForm, EditFruitForm, DeleteFruitForm, EditUserForm
@@ -26,36 +28,65 @@ class DashboardView(ListView):
 #     return render(request, 'webapp/dashboard.html', context)
 
 # profile views:
-def profile_create(request):
-    form = CreateUserForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('dashboard')
 
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'webapp/create-profile.html', context)
+class ProfileCreateView(CreateView):
+    model = UserProfile
+    form_class = CreateUserForm
+    template_name = "webapp/create-profile.html"
+    success_url = reverse_lazy('dashboard')
 
 
-def profile_details(request):
-    return render(request, 'webapp/details-profile.html')
+# old create profile view:
+# def profile_create(request):
+#     form = CreateUserForm(request.POST or None)
+#     if form.is_valid():
+#         form.save()
+#         return redirect('dashboard')
+#
+#     context = {
+#         'form': form,
+#     }
+#
+#     return render(request, 'webapp/create-profile.html', context)
 
 
-def profile_edit(request):
-    current_profile = UserProfile.objects.first()
-    form = EditUserForm(request.POST or None, instance=current_profile)
-    if form.is_valid():
-        form.save()
-        return redirect('profile details')
+class ProfileDetailView(DetailView):
+    model = UserProfile
+    template_name = 'webapp/details-profile.html'
 
-    context = {
-        'form': form,
-        'profile': current_profile
-    }
+    def get_object(self, queryset=None):
+        return UserProfile.objects.first()
 
-    return render(request, 'webapp/edit-profile.html', context)
+
+# old profile details view:
+# def profile_details(request):
+#     return render(request, 'webapp/details-profile.html')
+
+
+class ProfileEditView(UpdateView):
+    model = UserProfile
+    form_class = EditUserForm
+    template_name = 'webapp/edit-profile.html'
+    success_url = reverse_lazy('profile details')
+
+    def get_object(self, queryset=None):
+        return UserProfile.objects.first()
+
+
+# old profile edit view:
+# def profile_edit(request):
+#     current_profile = UserProfile.objects.first()
+#     form = EditUserForm(request.POST or None, instance=current_profile)
+#     if form.is_valid():
+#         form.save()
+#         return redirect('profile details')
+#
+#     context = {
+#         'form': form,
+#         'profile': current_profile
+#     }
+#
+#     return render(request, 'webapp/edit-profile.html', context)
 
 
 def profile_delete(request):
