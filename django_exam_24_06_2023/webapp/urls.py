@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.views.generic import DeleteView
 
 urlpatterns = (
     path('', views.index, name='index'),
@@ -8,7 +9,7 @@ urlpatterns = (
     path('profile/create/', views.ProfileCreateView.as_view(), name='create profile'),
     path('profile/details/', views.ProfileDetailView.as_view(), name='profile details'),
     path('profile/edit/', views.ProfileEditView.as_view(), name='edit profile'),
-    path('profile/delete/', views.profile_delete, name='delete profile'),
+    path('profile/delete/', views.ProfileDeleteView.as_view(), name='delete profile'),
     # fruit urls:
     path('fruit/create/', views.fruit_create, name='create fruit'),
     path('fruit/details/<int:pk>/', views.FruitDetailsView.as_view(), name='fruit details'),

@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from django_exam_24_06_2023.webapp.models import Fruit, UserProfile
 from .forms import CreateUserForm, CreateFruitForm, EditFruitForm, DeleteFruitForm, EditUserForm
@@ -88,16 +89,24 @@ class ProfileEditView(UpdateView):
 #
 #     return render(request, 'webapp/edit-profile.html', context)
 
+class ProfileDeleteView(DeleteView):
+    model = UserProfile
+    template_name = 'webapp/delete-profile.html'
+    success_url = reverse_lazy('index')
 
-def profile_delete(request):
-    current_profile = UserProfile.objects.first()
-    all_fruits = Fruit.objects.all()
-    if request.method == 'POST':
-        current_profile.delete()
-        all_fruits.delete()
-        return redirect('index')
+    def get_object(self, queryset=None):
+        return UserProfile.objects.first()
 
-    return render(request, 'webapp/delete-profile.html')
+# old profile delete
+# def profile_delete(request):
+#     current_profile = UserProfile.objects.first()
+#     all_fruits = Fruit.objects.all()
+#     if request.method == 'POST':
+#         current_profile.delete()
+#         all_fruits.delete()
+#         return redirect('index')
+#
+#     return render(request, 'webapp/delete-profile.html')
 
 
 # fruit views:
