@@ -106,7 +106,8 @@ class Fruit(models.Model):
         verbose_name="Nutrition"
     )
     user_profile = models.ForeignKey(
+        null=True,
+        blank=True,
         to=UserProfile,
-        default=1,
         on_delete=models.CASCADE,
     )

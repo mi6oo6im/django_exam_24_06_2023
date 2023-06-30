@@ -118,6 +118,10 @@ class CreateFruitView(CreateView):
     form_class = CreateFruitForm
     success_url = reverse_lazy('dashboard')
 
+    def form_valid(self, form):
+        profile = UserProfile.objects.first()
+        form.instance.profile = profile
+        return super().form_valid(form)
 
 # old create fruit view:
 # def fruit_create(request):
@@ -169,17 +173,30 @@ class EditFruitView(UpdateView):
 #
 #     return render(request, 'webapp/edit-fruit.html', context)
 
+class DeleteFruitView(DeleteView):
+    model = Fruit
+    template_name = 'webapp/delete-fruit.html'
+    success_url = reverse_lazy('dashboard')
+    form_class = DeleteFruitForm
 
-def fruit_delete(request, pk):
-    current_fruit = Fruit.objects.get(pk=pk)
-    form = DeleteFruitForm(request.POST or None, instance=current_fruit)
-    if request.method == 'POST':
-        current_fruit.delete()
-        return redirect('dashboard')
+    def get_form_kwargs(self):
+        instance = self.get_object()
+        form = super().get_form_kwargs()
+        form.update(instance=instance)
+        return form
 
-    context = {
-        'form': form,
-        'current_fruit': current_fruit
-    }
 
-    return render(request, 'webapp/delete-fruit.html', context)
+# old delete fruit view:
+# def fruit_delete(request, pk):
+#     current_fruit = Fruit.objects.get(pk=pk)
+#     form = DeleteFruitForm(request.POST or None, instance=current_fruit)
+#     if request.method == 'POST':
+#         current_fruit.delete()
+#         return redirect('dashboard')
+#
+#     context = {
+#         'form': form,
+#         'current_fruit': current_fruit
+#     }
+#
+#     return render(request, 'webapp/delete-fruit.html', context)

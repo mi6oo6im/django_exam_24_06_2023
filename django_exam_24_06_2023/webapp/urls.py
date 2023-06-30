@@ -14,5 +14,5 @@ urlpatterns = (
     path('fruit/create/', views.CreateFruitView.as_view(), name='create fruit'),
     path('fruit/details/<int:pk>/', views.FruitDetailsView.as_view(), name='fruit details'),
     path('fruit/edit/<int:pk>/', views.EditFruitView.as_view(), name='edit fruit'),
-    path('fruit/delete/<int:pk>/', views.fruit_delete, name='delete fruit'),
+    path('fruit/delete/<int:pk>/', views.DeleteFruitView.as_view(), name='delete fruit'),
 )

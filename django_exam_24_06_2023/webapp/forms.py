@@ -39,7 +39,7 @@ class EditUserForm(ModelForm):
 class CreateFruitForm(ModelForm):
     class Meta:
         model = Fruit
-        fields = '__all__'
+        exclude = ['user_profile']
         labels = {
             'name': "",
             'image_url': "",
@@ -57,7 +57,7 @@ class CreateFruitForm(ModelForm):
 class BaseFruitForm(ModelForm):
     class Meta:
         model = Fruit
-        fields = '__all__'
+        fields = ['name', 'image_url', 'description', 'nutrition']
         labels = {
             'name': "Name",
             'image_url': "Image URL",
@@ -83,4 +83,5 @@ class DeleteFruitForm(BaseFruitForm):
 
     def __set_fields_disabled(self):
         for field in self.fields.values():
-            field.widget.attrs['disabled'] = 'disabled'
+            field.widget.attrs['disabled'] = True
+            field.required = False
