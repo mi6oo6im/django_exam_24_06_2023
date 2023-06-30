@@ -11,8 +11,8 @@ urlpatterns = (
     path('profile/edit/', views.ProfileEditView.as_view(), name='edit profile'),
     path('profile/delete/', views.ProfileDeleteView.as_view(), name='delete profile'),
     # fruit urls:
-    path('fruit/create/', views.fruit_create, name='create fruit'),
+    path('fruit/create/', views.CreateFruitView.as_view(), name='create fruit'),
     path('fruit/details/<int:pk>/', views.FruitDetailsView.as_view(), name='fruit details'),
-    path('fruit/edit/<int:pk>/', views.fruit_edit, name='edit fruit'),
+    path('fruit/edit/<int:pk>/', views.EditFruitView.as_view(), name='edit fruit'),
     path('fruit/delete/<int:pk>/', views.fruit_delete, name='delete fruit'),
 )

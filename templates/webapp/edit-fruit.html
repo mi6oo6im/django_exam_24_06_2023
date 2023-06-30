@@ -5,7 +5,7 @@
         <section id="edit">
             <div class="form">
                 <h2>Edit Fruit</h2>
-                <form class="edit-form" method="post" action="{% url 'edit fruit' pk=current_fruit.pk%}">
+                <form class="edit-form" method="post" action="{% url 'edit fruit' fruit.pk%}">
 
                     {% csrf_token %}
                     {{ form }}

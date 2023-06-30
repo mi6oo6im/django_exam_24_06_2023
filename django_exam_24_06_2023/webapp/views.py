@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.messages import success
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -110,17 +111,26 @@ class ProfileDeleteView(DeleteView):
 
 
 # fruit views:
-def fruit_create(request):
-    form = CreateFruitForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('dashboard')
 
-    context = {
-        'form': form
-    }
+class CreateFruitView(CreateView):
+    model = Fruit
+    template_name = 'webapp/create-fruit.html'
+    form_class = CreateFruitForm
+    success_url = reverse_lazy('dashboard')
 
-    return render(request, 'webapp/create-fruit.html', context)
+
+# old create fruit view:
+# def fruit_create(request):
+#     form = CreateFruitForm(request.POST or None)
+#     if form.is_valid():
+#         form.save()
+#         return redirect('dashboard')
+#
+#     context = {
+#         'form': form
+#     }
+#
+#     return render(request, 'webapp/create-fruit.html', context)
 
 
 class FruitDetailsView(DetailView):
@@ -137,20 +147,27 @@ class FruitDetailsView(DetailView):
 #
 #     return render(request, 'webapp/details-fruit.html', context)
 
+class EditFruitView(UpdateView):
+    model = Fruit
+    template_name = 'webapp/edit-fruit.html'
+    success_url = reverse_lazy('dashboard')
+    form_class = EditFruitForm
 
-def fruit_edit(request, pk):
-    current_fruit = Fruit.objects.get(pk=pk)
-    form = EditFruitForm(request.POST or None, instance=current_fruit)
-    if form.is_valid():
-        form.save()
-        return redirect('dashboard')
 
-    context = {
-        'form': form,
-        'current_fruit': current_fruit
-    }
-
-    return render(request, 'webapp/edit-fruit.html', context)
+# old edit fruit view:
+# def fruit_edit(request, pk):
+#     current_fruit = Fruit.objects.get(pk=pk)
+#     form = EditFruitForm(request.POST or None, instance=current_fruit)
+#     if form.is_valid():
+#         form.save()
+#         return redirect('dashboard')
+#
+#     context = {
+#         'form': form,
+#         'current_fruit': current_fruit
+#     }
+#
+#     return render(request, 'webapp/edit-fruit.html', context)
 
 
 def fruit_delete(request, pk):
